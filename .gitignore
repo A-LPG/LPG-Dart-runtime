@@ -7,3 +7,5 @@ build/
 /.idea
 example/.DS_Store
 example/lpg/.DS_Store
+
+pubspec.lock
