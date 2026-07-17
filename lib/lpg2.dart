@@ -34,6 +34,7 @@ export 'src/NullTerminalSymbolsException.dart';
 export 'src/ObjectTuple.dart';
 export 'src/ParseErrorCodes.dart';
 export 'src/ParseTable.dart';
+export 'src/ProstheticAst.dart';
 export 'src/Protocol.dart';
 export 'src/PrsStream.dart';
 export 'src/RecoveryParser.dart';

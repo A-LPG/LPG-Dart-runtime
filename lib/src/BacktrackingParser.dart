@@ -8,6 +8,7 @@ import 'IntTuple.dart';
 import 'Monitor.dart';
 import 'NotBacktrackParseTableException.dart';
 import 'ParseTable.dart';
+import 'ProstheticAst.dart';
 import 'Protocol.dart';
 import 'RecoveryParser.dart';
 import 'RuleAction.dart';
@@ -387,11 +388,31 @@ class BacktrackingParser extends Stacks {
       } else // a shift or shift-reduce action
       {
         if (tokStream.getKind(curtok) > NT_OFFSET) {
-          var badtok =
-              (tokStream as IPrsStream).getIToken(curtok) as ErrorToken;
-          throw BadParseException(badtok
-              .getErrorToken()
-              .getTokenIndex()); // parseStack[stateStackTop] = ra.prostheticAst[prs.getProsthesisIndex(tokStream.getKind(curtok))].create(tokStream.getIToken(curtok));
+          //
+          // A replayed nonterminal ErrorToken (inserted by scope recovery).
+          // If the RuleAction supplies prosthetic-AST factories, synthesize a
+          // placeholder node; otherwise keep the historical behavior of
+          // throwing a BadParseException.
+          //
+          var prostheticAst = (ra is ProstheticAstProvider)
+              ? (ra as ProstheticAstProvider).getProstheticAst()
+              : null;
+          ProstheticAst? prosthesis;
+          if (prostheticAst != null && prs is ProsthesisIndexProvider) {
+            var slot = (prs as ProsthesisIndexProvider)
+                .getProsthesisIndex(tokStream.getKind(curtok));
+            if (slot >= 0 && slot < prostheticAst.length) {
+              prosthesis = prostheticAst[slot];
+            }
+          }
+          if (prosthesis == null) {
+            var badtok =
+                (tokStream as IPrsStream).getIToken(curtok) as ErrorToken;
+            throw BadParseException(
+                badtok.getErrorToken().getTokenIndex());
+          }
+          parseStack[stateStackTop] =
+              prosthesis((tokStream as IPrsStream).getIToken(curtok));
         }
         lastToken = curtok;
         curtok = tokens.get(++ti);
