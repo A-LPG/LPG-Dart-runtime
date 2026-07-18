@@ -15,6 +15,8 @@ export 'src/ConfigurationStack.dart';
 export 'src/DeterministicParser.dart';
 export 'src/DiagnoseParser.dart';
 export 'src/ErrorToken.dart';
+export 'src/ExpectedTokens.dart';
+export 'src/ParseIssue.dart';
 export 'src/IAbstractArrayList.dart';
 export 'src/IAst.dart';
 export 'src/IAstVisitor.dart';
