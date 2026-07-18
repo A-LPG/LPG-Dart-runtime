@@ -2524,6 +2524,8 @@ abstract class Irecover_symbol implements IRootForLPGParser    {
 abstract class ASTNode implements IAst
     {
         IAst? getNextAst(){ return null; }
+    void setNextAst(IAst n){ }
+    void resetNextAst(){ }
          late IToken leftIToken ;
          late IToken rightIToken ;
          IAst? parent;

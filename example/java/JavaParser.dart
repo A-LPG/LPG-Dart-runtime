@@ -10845,6 +10845,8 @@ abstract class IAssignmentOperator implements IRootForJavaParser    {
 abstract class Ast implements IAst
     {
         IAst? getNextAst(){ return null; }
+    void setNextAst(IAst n){ }
+    void resetNextAst(){ }
          late IToken leftIToken ;
          late IToken rightIToken ;
          IAst? parent;

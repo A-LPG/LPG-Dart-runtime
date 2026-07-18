@@ -68,6 +68,9 @@ import 'package:lpg2/lpg2.dart';
     static const bool  BACKTRACK = false;
     bool  getBacktrack() { return BACKTRACK; }
 
+    static const bool  GLR = false;
+    bool  isGLR() { return GLR; }
+
     int  getStartSymbol() { return lhs(0); }
     bool  isValidForParser()  { return JavaKWLexersym.isValidForParser; }
 
